@@ -77,28 +77,7 @@ class UsersController < ApplicationController
 
   def show
 
-    #微信share接口配置
-    if current_user.present?
-      group_owner = User.find_by(id: current_user.group.user_id)
-      group_name = current_user.group.name
-      @groupid = current_user.group.id
-      @title = session[:locale] == 'zh' ? "#{group_owner.name}推荐您加入 Groupmall!" : "#{group_owner.name} recommend you to join Groupmall!"
-      @img_url = 'http://foodie.trade-v.com/groupmall_logo.jpg'
-      @desc = session[:locale] == 'zh' ? 'Groupmall 是拼人品的团购、聚会和论坛。' : 'Groupmall is trusted based group buying, meetups and forums.'
-      @timestamp = Time.now.to_i
-      @appId = WX_APP_ID
-      @noncestr = random_str 16
-      @jsapilist = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
-      @jsapi_ticket = get_jsapi_ticket
-      post_params = {
-        :noncestr => @noncestr,
-        :jsapi_ticket => @jsapi_ticket,
-        :timestamp => @timestamp,
-        :url => request.url.gsub("localhost:5000", "foodie.trade-v.com")
-      }
-      @sign = create_sign_for_js post_params
-      @a = [request.url, post_params, request.url.gsub("trade", "foodie.trade-v.com")]
-    end
+    
 
     type = params[:type] || 'topic'
     

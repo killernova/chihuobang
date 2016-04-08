@@ -28,27 +28,7 @@ class EventsController < ApplicationController
       @content_pic = @parent.photos[1..-1]
     end
 
-    #微信share接口配置
-    @title = "#{current_user.nickname if current_user.present?}推荐您加入活动：#{current_title @event}"
-    @img_url = 'http://www.trade-v.com:5000' + @title_pic.to_s
-    if (current_body @event).present?
-      @desc = (current_body @event).html_safe.gsub(/\s/, '').gsub('<p>', '').gsub('</p>', '')
-    else 
-      @desc = ''
-    end
-    @timestamp = Time.now.to_i
-    @appId = WX_APP_ID
-    @noncestr = random_str 16
-    @jsapilist = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
-    @jsapi_ticket = get_jsapi_ticket
-    post_params = {
-      :noncestr => @noncestr,
-      :jsapi_ticket => @jsapi_ticket,
-      :timestamp => @timestamp,
-      :url => request.url.gsub("localhost:5000", "foodie.trade-v.com")
-    }
-    @sign = create_sign_for_js post_params
-    @a = [request.url, post_params, request.url.gsub("trade", "foodie.trade-v.com")]
+    
 
 
     if signed_in? 
