@@ -18,25 +18,7 @@
 </head>
 
 <body onload="<%=@onload %>" >
-<script>
 
-function isWeixinBrowser(){
-    var ua = navigator.userAgent.toLowerCase();
-      //  alert(ua);
-      return (/micromessenger/.test(ua)) ? true : false ;
-    }
-
-    var is_weixin_browser = isWeixinBrowser();
-  if(is_weixin_browser) {
-  <% if (current_user.nil? && session[:openid].nil?) || (current_user.nil? && controller_name != 'users' && session[:openid].nil?) %>
-    var return_url = encodeURIComponent(location.href);
-
-    var url = "http://foodie.trade-v.com/sessions/auto_login?return_url=" + return_url;
-    //alert(url);
-    location.href = url;
-  <% end %>
-}
-</script>
 
 <div class="off-canvas-wrap" data-offcanvas>
   <div class="inner-wrap">
